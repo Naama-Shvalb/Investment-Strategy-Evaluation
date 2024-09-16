@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import morgan from "morgan";
+import { superFunction } from "./super-puper";
 
 export const app = express();
 app.use(morgan("combined"));
@@ -13,3 +14,5 @@ app.get("/", (req: Request, res: Response) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+
+superFunction("kuku");

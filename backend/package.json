@@ -8,7 +8,7 @@
     "start": "ts-node src/app.ts",
     "build": "tsc",
     "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --ext .ts --fix"
+    "lint:fix": "../eslint . --ext .ts --fix"
   },
   "keywords": [],
   "author": "",
