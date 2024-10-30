@@ -23,6 +23,17 @@ class Strategy {
   dayActions(): void {
     console.warn("dayActions() must be implemented");
   }
+
+  clone(): Strategy {
+    const strategyPrototype = new Strategy(
+      this.stockSymbol,
+      this.quantity,
+      this.months,
+    );
+    strategyPrototype.firstDayActions = this.firstDayActions;
+    strategyPrototype.dayActions = this.dayActions;
+    return strategyPrototype;
+  }
 }
 
 export default Strategy;

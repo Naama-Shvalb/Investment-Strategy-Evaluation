@@ -1,5 +1,4 @@
 import { after } from "node:test";
-import stockData from "./historicalData.json";
 import Portfolio from "./portfolio";
 import Strategy from "./strategy";
 import { ExecutionResult, StockData, PortfolioArgs } from "./types";
@@ -59,7 +58,8 @@ class RangesExecutor {
         this.cash,
         firstDayIndex,
       );
-      tempPortfolio.setStrategy(this.strategy);
+      const strategyClone = this.strategy.clone();
+      tempPortfolio.setStrategy(strategyClone);
       return tempPortfolio;
     });
     const executionsResults: ExecutionResult[] = portfolios.map(

@@ -1,10 +1,9 @@
-import { log } from "node:util";
 import Portfolio from "../src/portfolio";
 import RangesExecutor from "../src/rangesExecuter";
 import Strategy from "../src/strategy";
 
 describe("RangesExecutor", () => {
-  let mockStockData: Array<{ date: string; AAPL: number }>;
+  let mockStockData: { date: string; AAPL: number }[];
   let mockStrategy: Strategy;
   let mockPortfolio: Portfolio;
 
@@ -43,7 +42,6 @@ describe("RangesExecutor", () => {
       3,
     );
 
-    // Call the function
     const results = rangesExecutor.allRangesExecution();
     console.log("results", results);
     // Assertions
@@ -55,6 +53,33 @@ describe("RangesExecutor", () => {
 
     // Check that the firstDayActions method was called once
     expect(mockStrategy.firstDayActions).toHaveBeenCalledTimes(3);
+    // Check that rangeExecution was called twice
+    //expect(mockPortfolio.rangeExecution).toHaveBeenCalledTimes(3);
+  });
+
+  it("by and hold", () => {
+    mockStrategy.firstDayActions = function () {
+      this.portfolio?.buyStocksByDollars(100);
+    };
+
+    const rangesExecutor = new RangesExecutor(
+      mockStockData,
+      mockStrategy,
+      10000,
+      3,
+    );
+
+    const results = rangesExecutor.allRangesExecution();
+    console.log("results", results);
+    // Assertions
+    expect(results).toHaveLength(3); // Since sampleSize is 2
+    expect(results[0].date).toBe("2023-01-01");
+    //expect(results[0].result).toBe(500);
+    expect(results[1].date).toBe("2023-02-01");
+    //expect(results[1].result).toBe(500);
+
+    // Check that the firstDayActions method was called once
+    //expect(mockStrategy.firstDayActions).toHaveBeenCalledTimes(3);
     // Check that rangeExecution was called twice
     //expect(mockPortfolio.rangeExecution).toHaveBeenCalledTimes(3);
   });
